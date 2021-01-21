@@ -7,7 +7,7 @@ public class RegisterSystems
         // determine order of systems to add
         List<ISystem> toRegister = new List<ISystem>();
 
-        // AJOUTEZ VOS SYSTEMS ICI
+        toRegister.Add(new InitializationSystem());
 
         return toRegister;
     }
