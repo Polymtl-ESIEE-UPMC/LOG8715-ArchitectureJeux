@@ -3,8 +3,8 @@
 public class InitializationSystem : ISystem
 {
     public string Name => "InitializationSystem";
-    ECSManager ecs;
-    World world;
+    private ECSManager ecs;
+    private World world;
     public InitializationSystem()
     {
        ecs  = ECSManager.Instance;
@@ -28,7 +28,6 @@ public class InitializationSystem : ISystem
             }
         }
         ecs.Config.systemsEnabled[Name] = false;
-
     }
     
     private bool isStatic(Config.ShapeConfig shape)
