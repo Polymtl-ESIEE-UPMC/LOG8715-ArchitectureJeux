@@ -1,38 +1,33 @@
-﻿public class InitializationSystem : ISystem
+﻿using UnityEngine;
+
+public class InitializationSystem : ISystem
 {
     public string Name => "InitializationSystem";
     private ECSManager ecs;
     private World world;
     public InitializationSystem()
     {
-       ecs  = ECSManager.Instance;
-       world = World.Instance;
+        ecs  = ECSManager.Instance;
+        world = World.Instance;
+        ecs.Config.systemsEnabled[Name] = true;
     }
 
     public void UpdateSystem()
     {
-        uint nbStatic = 0;
         for (uint i = 0; i < ecs.Config.allShapesToSpawn.Count; i++)
         {
             Config.ShapeConfig shape = ecs.Config.allShapesToSpawn[(int)i];
 
-            //if (isStatic(shape) && isModulo4(++nbStatic))
-            {
-                ecs.CreateShape(i, ecs.Config.allShapesToSpawn[(int)i]);
-                ecs.UpdateShapePosition(i, shape.initialPos);
-                world.Positions[i] = shape.initialPos;
-                world.Sizes[i] = shape.size;
-                world.Speeds[i] = shape.initialSpeed;
-            }
+            ecs.CreateShape(i, ecs.Config.allShapesToSpawn[(int)i]);
+            ecs.UpdateShapePosition(i, shape.initialPos);
+            world.Positions.Add(new PositionComponent(i, shape.initialPos));
+            world.Sizes.Add(new SizeComponent(i, shape.size));
+            world.Speeds.Add(new SpeedComponent(i, shape.initialSpeed));
+            world.Static.Add(isModulo4(i+1) ? new StaticComponent(true) : new StaticComponent(false));
         }
         ecs.Config.systemsEnabled[Name] = false;
     }
     
-    private bool isStatic(Config.ShapeConfig shape)
-    {
-        return (shape.initialSpeed.x == 0 && shape.initialSpeed.y == 0);
-    }
-
     private bool isModulo4(uint i)
     {
         return i % 4 == 0;

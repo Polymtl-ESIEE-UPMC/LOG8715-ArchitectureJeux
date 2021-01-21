@@ -15,11 +15,14 @@ class PositionUpdateSystem : ISystem
 
     public void UpdateSystem()
     {
-        for (uint i = 0; i < world.Positions.Count; i++)
+        for (int i = 0; i < world.Positions.Count; i++)
         {
-            Vector2 newPosition = world.Positions[i] + world.Speeds[i];
-            ecs.UpdateShapePosition(i, newPosition);
-            world.Positions[i] = newPosition;
+            if (!world.Static[i].IsStatic)
+            {
+                Vector2 newPosition = world.Positions[i].Position + world.Speeds[i].Speed;
+                ecs.UpdateShapePosition((uint)i, newPosition);
+                world.Positions[i].Position = newPosition;
+            }
         }
     }
 }

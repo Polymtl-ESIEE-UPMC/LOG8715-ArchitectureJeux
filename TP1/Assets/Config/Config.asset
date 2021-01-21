@@ -20,31 +20,14 @@ MonoBehaviour:
   - initialPos: {x: 2, y: 2}
     size: 3
     initialSpeed: {x: 3, y: 1}
-  - initialPos: {x: 1, y: 1}
-    size: 0.5
-    initialSpeed: {x: 0, y: 0}
-  - initialPos: {x: 2, y: 2}
-    size: 0.5
-    initialSpeed: {x: 0, y: 0}
-  - initialPos: {x: 3, y: 3}
-    size: 0.5
-    initialSpeed: {x: 0, y: 0}
-  - initialPos: {x: 4, y: 4}
-    size: 0.5
-    initialSpeed: {x: 0, y: 0}
-  - initialPos: {x: -1, y: -1}
-    size: 0.5
-    initialSpeed: {x: 0, y: 0}
-  - initialPos: {x: -2, y: -2}
-    size: 0.5
-    initialSpeed: {x: 0, y: 0}
   - initialPos: {x: -3, y: -3}
     size: 0.5
-    initialSpeed: {x: 0, y: 0}
+    initialSpeed: {x: 1, y: 1}
   - initialPos: {x: -4, y: -4}
     size: 0.5
-    initialSpeed: {x: 0, y: 0}
+    initialSpeed: {x: 1, y: 1}
   _systemsEnabled:
     keys:
     - InitializationSystem
-    values: 00
+    - PositionUpdateSystem
+    values: 0001
