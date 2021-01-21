@@ -8,6 +8,7 @@ public class RegisterSystems
         List<ISystem> toRegister = new List<ISystem>();
 
         toRegister.Add(new InitializationSystem());
+        toRegister.Add(new PositionUpdateSystem());
 
         return toRegister;
     }

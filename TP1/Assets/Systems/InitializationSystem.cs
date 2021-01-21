@@ -1,6 +1,4 @@
-﻿
-
-public class InitializationSystem : ISystem
+﻿public class InitializationSystem : ISystem
 {
     public string Name => "InitializationSystem";
     private ECSManager ecs;
@@ -18,7 +16,7 @@ public class InitializationSystem : ISystem
         {
             Config.ShapeConfig shape = ecs.Config.allShapesToSpawn[(int)i];
 
-            if (isStatic(shape) && isModulo4(++nbStatic))
+            //if (isStatic(shape) && isModulo4(++nbStatic))
             {
                 ecs.CreateShape(i, ecs.Config.allShapesToSpawn[(int)i]);
                 ecs.UpdateShapePosition(i, shape.initialPos);
