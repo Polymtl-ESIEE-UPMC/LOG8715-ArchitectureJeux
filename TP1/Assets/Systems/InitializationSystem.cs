@@ -9,11 +9,15 @@ public class InitializationSystem : ISystem
     {
         ecs  = ECSManager.Instance;
         world = World.Instance;
-        ecs.Config.systemsEnabled[Name] = true;
     }
 
     public void UpdateSystem()
     {
+        if (world.Positions.Count > 0)
+        {
+            return;
+        }
+
         for (uint i = 0; i < ecs.Config.allShapesToSpawn.Count; i++)
         {
             Config.ShapeConfig shape = ecs.Config.allShapesToSpawn[(int)i];
@@ -24,8 +28,9 @@ public class InitializationSystem : ISystem
             world.Sizes.Add(new SizeComponent(i, shape.size));
             world.Speeds.Add(new SpeedComponent(i, shape.initialSpeed));
             world.Static.Add(isModulo4(i+1) ? new StaticComponent(true) : new StaticComponent(false));
+            world.CollisionWithEdges.Add(new CollisionWithEdgesComponent(false));
+            world.CollisionsWithEntity.Add(new CollisionWithEntityComponent(false));
         }
-        ecs.Config.systemsEnabled[Name] = false;
     }
     
     private bool isModulo4(uint i)

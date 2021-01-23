@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 public sealed class World
 {
@@ -10,6 +9,8 @@ public sealed class World
     public List<SizeComponent> Sizes;
     public List<ColorComponent> Colors;
     public List<StaticComponent> Static;
+    public List<CollisionWithEdgesComponent> CollisionWithEdges;
+    public List<CollisionWithEntityComponent> CollisionsWithEntity;
 
     static World()
     {
@@ -22,6 +23,8 @@ public sealed class World
         Sizes = new List<SizeComponent>();
         Colors = new List<ColorComponent>();
         Static = new List<StaticComponent>();
+        CollisionWithEdges = new List<CollisionWithEdgesComponent>();
+        CollisionsWithEntity = new List<CollisionWithEntityComponent>();
     }
 
     public static World Instance
