@@ -30,6 +30,7 @@ public class InitializationSystem : ISystem
             world.Static.Add(isModulo4(i+1) ? new StaticComponent(true) : new StaticComponent(false));
             world.CollisionWithEdges.Add(new CollisionWithEdgesComponent(false));
             world.CollisionsWithEntity.Add(new CollisionWithEntityComponent(false));
+            world.ColliderComponents.Add(new ColliderComponent(true));
         }
     }
     

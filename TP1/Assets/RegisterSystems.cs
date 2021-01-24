@@ -9,6 +9,7 @@ public class RegisterSystems
 
         toRegister.Add(new InitializationSystem());
         toRegister.Add(new CollisionWithEdgesDetectionSystem());
+        toRegister.Add(new CollisionWithEntityDetectionSystem());
         toRegister.Add(new PositionUpdateSystem());
         toRegister.Add(new RenderSystem());
 

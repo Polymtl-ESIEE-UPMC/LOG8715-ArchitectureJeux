@@ -1,9 +1,9 @@
 ﻿
-public class CollisionWithEntityComponent : IComponent
+public class CollisionWithEntityComponent : EntityComponent
 {
-
-    public CollisionWithEntityComponent(bool hasCollision)
+    public CollisionWithEntityComponent(uint id, bool hasCollision)
     {
+        this.id = id;
         HasCollision = hasCollision;
     }
     public bool HasCollision { get; set; }

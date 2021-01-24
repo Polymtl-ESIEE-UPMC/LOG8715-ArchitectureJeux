@@ -11,6 +11,7 @@ public sealed class World
     public List<StaticComponent> Static;
     public List<CollisionWithEdgesComponent> CollisionWithEdges;
     public List<CollisionWithEntityComponent> CollisionsWithEntity;
+    public List<ColliderComponent> ColliderComponents;
 
     static World()
     {
@@ -25,6 +26,7 @@ public sealed class World
         Static = new List<StaticComponent>();
         CollisionWithEdges = new List<CollisionWithEdgesComponent>();
         CollisionsWithEntity = new List<CollisionWithEntityComponent>();
+        ColliderComponents = new List<ColliderComponent>();
     }
 
     public static World Instance

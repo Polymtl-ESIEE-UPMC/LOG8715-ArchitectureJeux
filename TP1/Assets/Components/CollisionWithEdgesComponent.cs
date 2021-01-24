@@ -1,7 +1,8 @@
-﻿public class CollisionWithEdgesComponent : IComponent
+﻿public class CollisionWithEdgesComponent : EntityComponent
 {
-    public CollisionWithEdgesComponent(bool hasCollision)
+    public CollisionWithEdgesComponent(uint id, bool hasCollision)
     {
+        this.id = id;
         HasCollision = hasCollision;
     }
    public bool HasCollision { get; set; }

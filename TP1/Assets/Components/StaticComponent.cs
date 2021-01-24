@@ -1,8 +1,9 @@
 ﻿public class StaticComponent : EntityComponent
 {
-    public bool IsStatic { get; set; }
-    public StaticComponent(bool isStatic)
+    public StaticComponent(uint id, bool isStatic)
     {
-        this.IsStatic = isStatic;
+        this.id = id;
+        IsStatic = isStatic;
     }
+    public bool IsStatic { get; set; }
 }
