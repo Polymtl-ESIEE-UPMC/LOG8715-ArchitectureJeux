@@ -15,10 +15,13 @@ MonoBehaviour:
   minSize: 1
   allShapesToSpawn:
   - initialPos: {x: -5, y: 0}
-    size: 2
-    initialSpeed: {x: 1, y: 3}
+    size: 1
+    initialSpeed: {x: 1, y: 0}
+  - initialPos: {x: 5, y: 0}
+    size: 1
+    initialSpeed: {x: -1, y: 0}
   - initialPos: {x: 2, y: 2}
-    size: 3
+    size: 1
     initialSpeed: {x: 3, y: 1}
   - initialPos: {x: -3, y: -3}
     size: 0.5
@@ -30,4 +33,11 @@ MonoBehaviour:
     keys:
     - InitializationSystem
     - PositionUpdateSystem
-    values: 0001
+    - RenderSystem
+    - CollisionDetectionSystem
+    - CollisionWithEdgesDetectionSystem
+    - CollisionWithEntityDetectionSystem
+    - GeneralCollisionResolutionSystem
+    - CollisionWithEntityResolutionSystem
+    - SizeUpdateSystem
+    values: 010101010101010101

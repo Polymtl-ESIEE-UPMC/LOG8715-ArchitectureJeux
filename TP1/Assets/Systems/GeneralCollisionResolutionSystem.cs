@@ -18,11 +18,6 @@ class GeneralCollisionResolutionSystem : ISystem
             {
                 world.Speeds[i].Speed = new Vector2(-world.Speeds[i].Speed.x, -world.Speeds[i].Speed.y);
             }
-            //todo remove
-            //
-            //
-            world.CollisionsWithEntity[i].HasCollision = false;
-            world.CollisionWithEdges[i].HasCollision = false;
         }
     }
 }

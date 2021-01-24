@@ -14,7 +14,7 @@ public class CollisionWithEntityDetectionSystem : ISystem
         {
             foreach (PositionComponent otherEntity in world.Positions)
             {
-                if (entity == otherEntity)
+                if (entity == otherEntity || !world.ColliderComponents[(int)entity.id].HasCollider || !world.ColliderComponents[(int)otherEntity.id].HasCollider)
                     continue;
 
                 float dx = entity.Position.x - otherEntity.Position.x;

@@ -11,7 +11,10 @@ public class RegisterSystems
         toRegister.Add(new CollisionWithEdgesDetectionSystem());
         toRegister.Add(new CollisionWithEntityDetectionSystem());
         toRegister.Add(new GeneralCollisionResolutionSystem());
+        toRegister.Add(new CollisionWithEntityResolutionSystem());
+        toRegister.Add(new CollisionWithEdgesResolutionSystem());
         toRegister.Add(new PositionUpdateSystem());
+        toRegister.Add(new SizeRenderSystem());
         toRegister.Add(new RenderSystem());
 
         return toRegister;

@@ -15,7 +15,7 @@ class PositionUpdateSystem : ISystem
     {
         for (int i = 0; i < world.Positions.Count; i++)
         {
-            if (!world.Static[i].IsStatic && !world.CollisionWithEdges[i].HasCollision)
+            if (!world.Static[i].IsStatic)
             {
                 Vector2 newPosition = world.Positions[i].Position + world.Speeds[i].Speed;
                 world.Positions[i].Position = newPosition;
