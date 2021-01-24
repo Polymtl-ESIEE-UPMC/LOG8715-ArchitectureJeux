@@ -31,6 +31,7 @@ public class InitializationSystem : ISystem
             world.CollisionWithEdges.Add(new CollisionWithEdgesComponent(i, false));
             world.CollisionsWithEntity.Add(new CollisionWithEntityComponent(i, false));
             world.ColliderComponents.Add(new ColliderComponent(i, true));
+            world.Colors.Add(new ColorComponent(i, Color.white));
         }
     }
     

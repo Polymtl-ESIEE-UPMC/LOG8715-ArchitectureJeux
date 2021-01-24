@@ -1,4 +1,6 @@
 ﻿using System;
+using UnityEngine;
+
 public class CollisionWithEntityDetectionSystem : ISystem
 {
     public string Name => "CollisionWithEntityDetectionSystem";

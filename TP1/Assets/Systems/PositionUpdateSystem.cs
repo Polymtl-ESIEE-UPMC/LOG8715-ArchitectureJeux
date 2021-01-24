@@ -17,7 +17,7 @@ class PositionUpdateSystem : ISystem
         {
             if (!world.Static[i].IsStatic)
             {
-                Vector2 newPosition = world.Positions[i].Position + world.Speeds[i].Speed;
+                Vector2 newPosition = world.Positions[i].Position + world.Speeds[i].Speed*Time.deltaTime;
                 world.Positions[i].Position = newPosition;
             }
         }

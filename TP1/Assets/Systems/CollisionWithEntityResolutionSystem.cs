@@ -21,7 +21,7 @@ public class CollisionWithEntityResolutionSystem : ISystem
                 world.Sizes[i].Size = world.Sizes[i].Size / 2;
 
             }
-            if (!isMoreThanMinSize(i))
+            if (!isMoreThanMinSize(i) && !world.Static[i].IsStatic)
             {
                 world.ColliderComponents[i].HasCollider = false;
             }

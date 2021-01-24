@@ -1,10 +1,10 @@
-﻿public class SizeRenderSystem : ISystem
+﻿public class RenderSizeSystem : ISystem
 {
-    public string Name => "SizeRenderSystem";
+    public string Name => "RenderSizeSystem";
     private readonly ECSManager ecs;
     private readonly World world;
 
-    public SizeRenderSystem()
+    public RenderSizeSystem()
     {
         ecs = ECSManager.Instance;
         world = World.Instance;
