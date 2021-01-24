@@ -27,10 +27,10 @@ public class InitializationSystem : ISystem
             world.Positions.Add(new PositionComponent(i, shape.initialPos));
             world.Sizes.Add(new SizeComponent(i, shape.size));
             world.Speeds.Add(new SpeedComponent(i, shape.initialSpeed));
-            world.Static.Add(isModulo4(i+1) ? new StaticComponent(true) : new StaticComponent(false));
-            world.CollisionWithEdges.Add(new CollisionWithEdgesComponent(false));
-            world.CollisionsWithEntity.Add(new CollisionWithEntityComponent(false));
-            world.ColliderComponents.Add(new ColliderComponent(true));
+            world.Static.Add(isModulo4(i+1) ? new StaticComponent(i, true) : new StaticComponent(i, false));
+            world.CollisionWithEdges.Add(new CollisionWithEdgesComponent(i, false));
+            world.CollisionsWithEntity.Add(new CollisionWithEntityComponent(i, false));
+            world.ColliderComponents.Add(new ColliderComponent(i, true));
         }
     }
     

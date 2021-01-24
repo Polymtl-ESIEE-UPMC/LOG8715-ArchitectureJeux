@@ -5,7 +5,6 @@ public class CollisionWithEdgesDetectionSystem : ISystem
     public string Name => "CollisionWithEdgesDetectionSystem";
     private readonly Camera camera;
     private readonly Vector2 LdCorner;
- 
     private readonly Vector2 RuCorner;
     private readonly World world;
 
