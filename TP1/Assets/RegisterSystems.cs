@@ -8,6 +8,9 @@ public class RegisterSystems
         List<ISystem> toRegister = new List<ISystem>();
 
         toRegister.Add(new InitializationSystem());
+        toRegister.Add(new TimeUpdateSystem());
+        toRegister.Add(new SaveSystem());
+        toRegister.Add(new RewindSystem());
         toRegister.Add(new CollisionWithEdgesDetectionSystem());
         toRegister.Add(new CollisionWithEntityDetectionSystem());
         toRegister.Add(new GeneralCollisionResolutionSystem());
@@ -15,8 +18,6 @@ public class RegisterSystems
         toRegister.Add(new CollisionWithEdgesResolutionSystem());
         toRegister.Add(new ColorUpdateSystem());
         toRegister.Add(new PositionUpdateSystem());
-        toRegister.Add(new RenderSizeSystem());
-        toRegister.Add(new RenderColorSystem());
         toRegister.Add(new RenderSystem());
 
         return toRegister;

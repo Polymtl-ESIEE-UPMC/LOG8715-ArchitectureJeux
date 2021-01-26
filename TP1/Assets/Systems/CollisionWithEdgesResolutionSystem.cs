@@ -20,7 +20,7 @@ public class CollisionWithEdgesResolutionSystem : ISystem
             if (world.CollisionWithEdges[i].HasCollision)
             {
                 world.Sizes[i].Size = ecs.Config.allShapesToSpawn[i].size;
-                world.ColliderComponents[i].HasCollider = true;
+                world.Colliders[i].HasCollider = true;
 
                 //reajust the entity position as to not be stuck in the wall after the resizing.
                 float xSpeedSign = 0;

@@ -3,7 +3,7 @@
     public SizeComponent(uint id, float size)
     {
         this.id = id;
-        this.Size = size;
+        Size = size;
     }
-   public float Size { get; set; }
+    public float Size;
 }

@@ -14,7 +14,7 @@ public class CollisionWithEntityResolutionSystem : ISystem
 
     public void UpdateSystem()
     {
-        for (int i = 0; i < world.CollisionsWithEntity.Count; i++)
+        for (int i = 0; i < world.CollisionsWithEntities.Count; i++)
         {
             if (hasCollision(i) && !isStatic(i) && isMoreThanMinSize(i))
             {
@@ -23,9 +23,9 @@ public class CollisionWithEntityResolutionSystem : ISystem
             }
             if (!isMoreThanMinSize(i) && !world.Static[i].IsStatic)
             {
-                world.ColliderComponents[i].HasCollider = false;
+                world.Colliders[i].HasCollider = false;
             }
-            world.CollisionsWithEntity[i].HasCollision = false;
+            world.CollisionsWithEntities[i].HasCollision = false;
         }
     }
 
@@ -36,7 +36,7 @@ public class CollisionWithEntityResolutionSystem : ISystem
 
     private bool hasCollision(int id)
     {
-        return world.CollisionsWithEntity[id].HasCollision;
+        return world.CollisionsWithEntities[id].HasCollision;
     }
 
     private bool isMoreThanMinSize(int id)

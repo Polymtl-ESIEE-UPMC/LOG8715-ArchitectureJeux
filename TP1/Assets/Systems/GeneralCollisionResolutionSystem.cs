@@ -14,7 +14,7 @@ class GeneralCollisionResolutionSystem : ISystem
     {
         for (int i = 0; i < world.Speeds.Count; i++)
         {
-            if (world.CollisionsWithEntity[i].HasCollision || world.CollisionWithEdges[i].HasCollision)
+            if (world.CollisionsWithEntities[i].HasCollision || world.CollisionWithEdges[i].HasCollision)
             {
                 world.Speeds[i].Speed = new Vector2(-world.Speeds[i].Speed.x, -world.Speeds[i].Speed.y);
             }

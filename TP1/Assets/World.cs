@@ -10,11 +10,25 @@ public sealed class World
     public List<ColorComponent> Colors;
     public List<StaticComponent> Static;
     public List<CollisionWithEdgesComponent> CollisionWithEdges;
-    public List<CollisionWithEntityComponent> CollisionsWithEntity;
-    public List<ColliderComponent> ColliderComponents;
+    public List<CollisionWithEntityComponent> CollisionsWithEntities;
+    public List<ColliderComponent> Colliders;
+
+    public List<PastPositionComponent> PastPositions;
+    public List<PastSpeedComponent> PastSpeeds;
+    public List<PastColorComponent> PastColors;
+    public List<PastSizeComponent> PastSizes;
+    public List<PastColliderComponent> PastColliders;
+    public List<FrameTimeComponent> frameTimes;
+
+
 
     static World()
     {
+    }
+
+    public World(World world)
+    {
+        Positions = new List<PositionComponent>(world.Positions);
     }
 
     private World()
@@ -25,8 +39,14 @@ public sealed class World
         Colors = new List<ColorComponent>();
         Static = new List<StaticComponent>();
         CollisionWithEdges = new List<CollisionWithEdgesComponent>();
-        CollisionsWithEntity = new List<CollisionWithEntityComponent>();
-        ColliderComponents = new List<ColliderComponent>();
+        CollisionsWithEntities = new List<CollisionWithEntityComponent>();
+        Colliders = new List<ColliderComponent>();
+        PastPositions = new List<PastPositionComponent>();
+        frameTimes = new List<FrameTimeComponent>();
+        PastSpeeds = new List<PastSpeedComponent>();
+        PastColors = new List<PastColorComponent>();
+        PastSizes = new List<PastSizeComponent>();
+        PastColliders = new List<PastColliderComponent>();
     }
 
     public static World Instance

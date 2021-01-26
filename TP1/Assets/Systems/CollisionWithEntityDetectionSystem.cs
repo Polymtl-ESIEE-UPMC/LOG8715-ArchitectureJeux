@@ -16,7 +16,7 @@ public class CollisionWithEntityDetectionSystem : ISystem
         {
             foreach (PositionComponent otherEntity in world.Positions)
             {
-                if (entity == otherEntity || !world.ColliderComponents[(int)entity.id].HasCollider || !world.ColliderComponents[(int)otherEntity.id].HasCollider)
+                if (entity == otherEntity || !world.Colliders[(int)entity.id].HasCollider || !world.Colliders[(int)otherEntity.id].HasCollider)
                     continue;
 
                 float dx = entity.Position.x - otherEntity.Position.x;
@@ -27,8 +27,8 @@ public class CollisionWithEntityDetectionSystem : ISystem
                 float otherRadius = world.Sizes[(int)otherEntity.id].Size/2f;
                 if (distance < radius + otherRadius)
                 {
-                    world.CollisionsWithEntity[(int)entity.id].HasCollision = true;
-                    world.CollisionsWithEntity[(int)otherEntity.id].HasCollision = true;
+                    world.CollisionsWithEntities[(int)entity.id].HasCollision = true;
+                    world.CollisionsWithEntities[(int)otherEntity.id].HasCollision = true;
                 }
             }
         }

@@ -17,7 +17,7 @@ public class ColorUpdateSystem : ISystem
             if (world.Static[i].IsStatic)
             {
                 world.Colors[i].Color = Color.red;
-            } else if (world.ColliderComponents[i].HasCollider)
+            } else if (world.Colliders[i].HasCollider)
             {
                 world.Colors[i].Color = Color.blue;
             } else

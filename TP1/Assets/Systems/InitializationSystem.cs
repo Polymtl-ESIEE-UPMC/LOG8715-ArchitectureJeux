@@ -29,9 +29,14 @@ public class InitializationSystem : ISystem
             world.Speeds.Add(new SpeedComponent(i, shape.initialSpeed));
             world.Static.Add(isModulo4(i+1) ? new StaticComponent(i, true) : new StaticComponent(i, false));
             world.CollisionWithEdges.Add(new CollisionWithEdgesComponent(i, false));
-            world.CollisionsWithEntity.Add(new CollisionWithEntityComponent(i, false));
-            world.ColliderComponents.Add(new ColliderComponent(i, true));
+            world.CollisionsWithEntities.Add(new CollisionWithEntityComponent(i, false));
+            world.Colliders.Add(new ColliderComponent(i, true));
             world.Colors.Add(new ColorComponent(i, Color.white));
+            world.PastPositions.Add(new PastPositionComponent(i));
+            world.PastSpeeds.Add(new PastSpeedComponent(i));
+            world.PastColors.Add(new PastColorComponent(i));
+            world.PastSizes.Add(new PastSizeComponent(i));
+            world.PastColliders.Add(new PastColliderComponent(i));
         }
     }
     
