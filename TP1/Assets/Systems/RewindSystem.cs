@@ -6,26 +6,24 @@ public class RewindSystem : ISystem
     public string Name => "RewindSystem";
     private readonly float COOLDOWN = 2.0f;
     private readonly World world;
-    private float nextRewindTime;
 
     public RewindSystem()
     {
         world = World.Instance;
-        nextRewindTime = 0;
     }
 
     public void UpdateSystem()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > nextRewindTime)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > world.NextRewindTime)
         {
             Rewind(CalculateFrameToGoBackTo());
             ClearPastFrames();
 
-            nextRewindTime = Time.time + COOLDOWN;
+            world.NextRewindTime = Time.time + COOLDOWN;
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Rewind in cooldown for another" + (nextRewindTime - Time.time) + "seconds");
+            Debug.Log("Rewind in cooldown for another" + (world.NextRewindTime - Time.time) + "seconds");
         }
     }
 

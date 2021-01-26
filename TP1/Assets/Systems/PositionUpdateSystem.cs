@@ -13,13 +13,35 @@ class PositionUpdateSystem : ISystem
 
     public void UpdateSystem()
     {
+        if (world.IsFirstRun)
+            FullScreenUpdate();
+        else
+            UpperHalfScreenUpdate();
+    }
+
+    private void FullScreenUpdate()
+    {
         for (int i = 0; i < world.Positions.Count; i++)
         {
-            if (!world.Static[i].IsStatic)
-            {
-                Vector2 newPosition = world.Positions[i].Position + world.Speeds[i].Speed*Time.deltaTime;
-                world.Positions[i].Position = newPosition;
-            }
+            UpdatePosition(i);
+        }
+    }
+
+    private void UpperHalfScreenUpdate()
+    {
+        for (int i = 0; i < world.Positions.Count; i++)
+        {
+            if (world.EntityInUpperHalf(i))
+                UpdatePosition(i);
+        }
+    }
+
+    private void UpdatePosition(int id)
+    {
+        if (!world.Static[id].IsStatic)
+        {
+            Vector2 newPosition = world.Positions[id].Position + world.Speeds[id].Speed * Time.deltaTime;
+            world.Positions[id].Position = newPosition;
         }
     }
 }

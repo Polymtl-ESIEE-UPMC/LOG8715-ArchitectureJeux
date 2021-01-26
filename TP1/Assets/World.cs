@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public sealed class World
 {
@@ -19,6 +20,12 @@ public sealed class World
     public List<PastSizeComponent> PastSizes;
     public List<PastColliderComponent> PastColliders;
     public List<FrameTimeComponent> frameTimes;
+
+    public bool IsFirstRun { get; set; }
+
+    public float NextRewindTime { get; set; }
+    public Vector2 LdCorner { get; set; }
+    public Vector2 RuCorner { get; set; }
 
 
 
@@ -47,6 +54,16 @@ public sealed class World
         PastColors = new List<PastColorComponent>();
         PastSizes = new List<PastSizeComponent>();
         PastColliders = new List<PastColliderComponent>();
+        NextRewindTime = 0;
+        IsFirstRun = true;
+
+        LdCorner = Camera.main.ViewportToWorldPoint(new Vector3(0f, 0f, Camera.main.nearClipPlane));
+        RuCorner = Camera.main.ViewportToWorldPoint(new Vector3(1f, 1f, Camera.main.nearClipPlane));
+    }
+
+    public bool EntityInUpperHalf(int id)
+    {
+        return Positions[id].Position.y > ((RuCorner.y + LdCorner.y)/2);
     }
 
     public static World Instance

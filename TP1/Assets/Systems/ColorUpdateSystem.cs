@@ -12,18 +12,42 @@ public class ColorUpdateSystem : ISystem
 
     public void UpdateSystem()
     {
+        if (world.IsFirstRun)
+            FullScreenUpdate();
+        else
+            UpperHalfScreenUpdate();
+    }
+
+    private void FullScreenUpdate()
+    {
         for (int i = 0; i < world.Colors.Count; i++)
         {
-            if (world.Static[i].IsStatic)
-            {
-                world.Colors[i].Color = Color.red;
-            } else if (world.Colliders[i].HasCollider)
-            {
-                world.Colors[i].Color = Color.blue;
-            } else
-            {
-                world.Colors[i].Color = Color.green;
-            }
+            UpdateColor(i);
+        }
+    }
+
+    private void UpperHalfScreenUpdate()
+    {
+        for (int i = 0; i < world.Colors.Count; i++)
+        {   
+            if (world.EntityInUpperHalf(i))
+                UpdateColor(i);
+        }
+    }
+
+    private void UpdateColor(int id)
+    {
+        if (world.Static[id].IsStatic)
+        {
+            world.Colors[id].Color = Color.red;
+        }
+        else if (world.Colliders[id].HasCollider)
+        {
+            world.Colors[id].Color = Color.blue;
+        }
+        else
+        {
+            world.Colors[id].Color = Color.green;
         }
     }
 }

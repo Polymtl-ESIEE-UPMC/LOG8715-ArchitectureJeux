@@ -3,31 +3,47 @@
 public class CollisionWithEdgesDetectionSystem : ISystem
 {
     public string Name => "CollisionWithEdgesDetectionSystem";
-    private readonly Camera camera;
-    private readonly Vector2 LdCorner;
-    private readonly Vector2 RuCorner;
     private readonly World world;
 
 
     public CollisionWithEdgesDetectionSystem()
     {
         world = World.Instance;
-        camera = Camera.main;
-        LdCorner = camera.ViewportToWorldPoint(new Vector3(0f, 0f, camera.nearClipPlane));
-        RuCorner = camera.ViewportToWorldPoint(new Vector3(1f, 1f, camera.nearClipPlane));
     }
 
     public void UpdateSystem()
     {
+        if (world.IsFirstRun)
+            FullScreenDetection();
+        else
+            UpperHalfScreenDetection();
+
+    }
+
+    private void FullScreenDetection()
+    {
         for (int i = 0; i < world.Positions.Count; i++)
         {
+            CheckCollisionWithEntity(i);
+        }
+    }
 
-            Vector2 position = world.Positions[i].Position;
-            float size = world.Sizes[i].Size/2;
-            if (isCollidingWithEdges(position, size))
-            {
-                world.CollisionWithEdges[i].HasCollision = true;
-            }
+    private void UpperHalfScreenDetection()
+    {
+        for (int i = 0; i < world.Positions.Count; i++)
+        {
+            if (world.EntityInUpperHalf(i))
+                CheckCollisionWithEntity(i);
+        }
+    }
+
+    private void CheckCollisionWithEntity(int id)
+    {
+        Vector2 position = world.Positions[id].Position;
+        float size = world.Sizes[id].Size / 2;
+        if (isCollidingWithEdges(position, size))
+        {
+            world.CollisionWithEdges[id].HasCollision = true;
         }
     }
 
@@ -42,7 +58,7 @@ public class CollisionWithEdgesDetectionSystem : ISystem
 
     private bool IscollidingWithUpperEdge(Vector2 position, float size)
     {
-        if ((position.y + size) >= RuCorner.y)
+        if ((position.y + size) >= world.RuCorner.y)
             return true;
         else
             return false;
@@ -50,7 +66,7 @@ public class CollisionWithEdgesDetectionSystem : ISystem
 
     private bool IsCollidingWithLeftEdge(Vector2 position, float size)
     {
-        if (position.x - size <= LdCorner.x)
+        if (position.x - size <= world.LdCorner.x)
             return true;
         else
             return false;
@@ -58,7 +74,7 @@ public class CollisionWithEdgesDetectionSystem : ISystem
 
     private bool IsCollidingWithRightEdge(Vector2 position, float size)
     {
-        if ((position.x + size) >= RuCorner.x)
+        if ((position.x + size) >= world.RuCorner.x)
             return true;
         else 
             return false;
@@ -66,7 +82,7 @@ public class CollisionWithEdgesDetectionSystem : ISystem
 
     private bool IsCollidingWithLowerEdge(Vector2 position, float size)
     {
-        if ((position.y - size) <= LdCorner.y)
+        if ((position.y - size) <= world.LdCorner.y)
             return true;
         else 
             return false;

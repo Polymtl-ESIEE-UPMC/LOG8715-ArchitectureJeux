@@ -12,12 +12,34 @@ class GeneralCollisionResolutionSystem : ISystem
 
     public void UpdateSystem()
     {
+        if (world.IsFirstRun)
+            FullScreenResolution();
+        else
+            UpperHalfScreenResolution();
+    }
+
+    private void FullScreenResolution()
+    {
         for (int i = 0; i < world.Speeds.Count; i++)
         {
-            if (world.CollisionsWithEntities[i].HasCollision || world.CollisionWithEdges[i].HasCollision)
-            {
-                world.Speeds[i].Speed = new Vector2(-world.Speeds[i].Speed.x, -world.Speeds[i].Speed.y);
-            }
+            CollisionResolution(i);
+        }
+    }
+
+    private void UpperHalfScreenResolution()
+    {
+        for (int i = 0; i < world.Speeds.Count; i++)
+        {  
+            if (world.EntityInUpperHalf(i))
+                CollisionResolution(i);
+        }
+    }
+
+    private void CollisionResolution(int id)
+    {
+        if (world.CollisionsWithEntities[id].HasCollision || world.CollisionWithEdges[id].HasCollision)
+        {
+            world.Speeds[id].Speed = new Vector2(-world.Speeds[id].Speed.x, -world.Speeds[id].Speed.y);
         }
     }
 }
