@@ -72,13 +72,6 @@ internal class ComponentsManager : Singleton<ComponentsManager>
         if (!_allComponents.ContainsKey(TypeRegistry<T>.typeID))
         {
             _allComponents[TypeRegistry<T>.typeID] = new InnerType();
-            if (typeof(T) != typeof(EntityComponent))
-            {
-                for (int i = 0; i < maxEntities; i++)
-                {
-                    _allComponents[TypeRegistry<T>.typeID].Add(null);
-                }
-            }
         }
         if (_allComponents[TypeRegistry<T>.typeID].Count <= entityID.id)
             _allComponents[TypeRegistry<T>.typeID].Add(component);
@@ -87,7 +80,8 @@ internal class ComponentsManager : Singleton<ComponentsManager>
     }
     public void RemoveComponent<T>(EntityComponent entityID) where T : IComponent
     {
-        _allComponents[TypeRegistry<T>.typeID][(int)entityID.id] = null;
+        if (_allComponents[TypeRegistry<T>.typeID].Count > entityID.id)
+            _allComponents[TypeRegistry<T>.typeID][(int)entityID.id] = null;
     }
     public T GetComponent<T>(EntityComponent entityID) where T : IComponent
     {
@@ -97,7 +91,7 @@ internal class ComponentsManager : Singleton<ComponentsManager>
     {
         if (_allComponents.ContainsKey(TypeRegistry<T>.typeID))
         {
-            if (_allComponents[TypeRegistry<T>.typeID].Count != 0 && _allComponents[TypeRegistry<T>.typeID][(int)entityID.id] != null)
+            if (_allComponents[TypeRegistry<T>.typeID].Count > entityID.id && _allComponents[TypeRegistry<T>.typeID][(int)entityID.id] != null)
             {
                 component = (T)_allComponents[TypeRegistry<T>.typeID][(int)entityID.id];
                 return true;
@@ -114,29 +108,20 @@ internal class ComponentsManager : Singleton<ComponentsManager>
 
     public void ClearComponents<T>() where T : IComponent
     {
+        int size = _allComponents.ContainsKey(TypeRegistry<EntityComponent>.typeID) ? _allComponents[TypeRegistry<EntityComponent>.typeID].Count : maxEntities;
         if (!_allComponents.ContainsKey(TypeRegistry<T>.typeID))
         {
             _allComponents[TypeRegistry<T>.typeID] = new InnerType();
-            if (typeof(T) != typeof(EntityComponent))
+            for (int i = 0; i < size; i++)
             {
-                for (int i = 0; i < maxEntities; i++)
-                {
-                    _allComponents[TypeRegistry<T>.typeID].Add(null);
-                }
+                _allComponents[TypeRegistry<T>.typeID].Add(null);
             }
         }
         else
         {
-            if (typeof(T) != typeof(EntityComponent))
+            for (int i = 0; i < size; i++)
             {
-                for (int i = 0; i < maxEntities; i++)
-                {
-                    _allComponents[TypeRegistry<T>.typeID][i] = null;
-                }
-            }
-            else
-            {
-                _allComponents[TypeRegistry<T>.typeID].Clear();
+                _allComponents[TypeRegistry<T>.typeID][i] = null;
             }
         }
     }
@@ -145,11 +130,22 @@ internal class ComponentsManager : Singleton<ComponentsManager>
     {
         var allEntities = _allComponents[TypeRegistry<EntityComponent>.typeID];
         var t1List = _allComponents[TypeRegistry<T1>.typeID];
+        var t1Size = t1List.Count;
+        IComponent t1Entity;
         foreach (EntityComponent entity in allEntities)
         {
-            if (t1List[(int)entity.id] != null)
+            int index = (int)entity.id;
+            if (t1Size > index)
             {
-                lambda(entity, (T1)t1List[(int)entity.id]);
+                t1Entity = t1List[index];
+                if (t1Entity != null)
+                {
+                    lambda(entity, (T1)t1Entity);
+                }
+            }
+            else
+            {
+                return;
             }
         }
     }
@@ -159,11 +155,24 @@ internal class ComponentsManager : Singleton<ComponentsManager>
         var allEntities = _allComponents[TypeRegistry<EntityComponent>.typeID];
         var t1List = _allComponents[TypeRegistry<T1>.typeID];
         var t2List = _allComponents[TypeRegistry<T2>.typeID];
+        var t1Size = t1List.Count;
+        var t2Size = t2List.Count;
+        IComponent t1Entity, t2Entity;
         foreach (EntityComponent entity in allEntities)
         {
-            if (t1List[(int)entity.id] != null && t2List[(int)entity.id] != null)
+            int index = (int)entity.id;
+            if (t1Size > index && t2Size > index)
             {
-                lambda(entity, (T1)t1List[(int)entity.id], (T2)t2List[(int)entity.id]);
+                t1Entity = t1List[index];
+                t2Entity = t2List[index];
+                if (t1Entity != null && t2List[index] != null)
+                {
+                    lambda(entity, (T1)t1Entity, (T2)t2Entity);
+                }
+            }
+            else
+            {
+                return;
             }
         }
     }
@@ -174,11 +183,27 @@ internal class ComponentsManager : Singleton<ComponentsManager>
         var t1List = _allComponents[TypeRegistry<T1>.typeID];
         var t2List = _allComponents[TypeRegistry<T2>.typeID];
         var t3List = _allComponents[TypeRegistry<T3>.typeID];
+        var t1Size = t1List.Count;
+        var t2Size = t2List.Count;
+        var t3Size = t3List.Count;
+        IComponent t1Entity, t2Entity, t3Entity;
         foreach (EntityComponent entity in allEntities)
         {
-            if (t1List[(int)entity.id] != null && t2List[(int)entity.id] != null && t3List[(int)entity.id] != null)
+            int index = (int)entity.id;
+
+            if (t1Size > index && t2Size > index && t3Size > index)
             {
-                lambda(entity, (T1)t1List[(int)entity.id], (T2)t2List[(int)entity.id], (T3)t3List[(int)entity.id]);
+                t1Entity = t1List[index];
+                t2Entity = t2List[index];
+                t3Entity = t3List[index];
+                if (t1Entity != null && t2Entity != null && t3Entity != null)
+                {
+                    lambda(entity, (T1)t1Entity, (T2)t2Entity, (T3)t3Entity);
+                }
+            }
+            else
+            {
+                return;
             }
         }
     }
@@ -190,11 +215,28 @@ internal class ComponentsManager : Singleton<ComponentsManager>
         var t2List = _allComponents[TypeRegistry<T2>.typeID];
         var t3List = _allComponents[TypeRegistry<T3>.typeID];
         var t4List = _allComponents[TypeRegistry<T4>.typeID];
+        var t1Size = t1List.Count;
+        var t2Size = t2List.Count;
+        var t3Size = t3List.Count;
+        var t4Size = t4List.Count;
+        IComponent t1Entity, t2Entity, t3Entity, t4Entity;
         foreach (EntityComponent entity in allEntities)
         {
-            if (t1List[(int)entity.id] != null && t2List[(int)entity.id] != null && t3List[(int)entity.id] != null && t4List[(int)entity.id] != null)
+            int index = (int)entity.id;
+            if (t1Size > index && t2Size > index && t3Size > index && t4Size > index)
             {
-                lambda(entity, (T1)t1List[(int)entity.id], (T2)t2List[(int)entity.id], (T3)t3List[(int)entity.id], (T4)t4List[(int)entity.id]);
+                t1Entity = t1List[index];
+                t2Entity = t2List[index];
+                t3Entity = t3List[index];
+                t4Entity = t4List[index];
+                if (t1Entity != null && t2Entity != null && t3Entity != null && t4Entity != null)
+                {
+                    lambda(entity, (T1)t1Entity, (T2)t2Entity, (T3)t3Entity, (T4)t4Entity);
+                }
+            } 
+            else
+            {
+                return;
             }
         }
     }
