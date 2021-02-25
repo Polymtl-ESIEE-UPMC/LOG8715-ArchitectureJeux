@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f6298b63162af49b161af8f69d4513, type: 3}
+  m_Name: Config
+  m_EditorClassIdentifier: 
+  minSize: 0.25
+  allShapesToSpawn:
+  - initialPos: {x: -5, y: -0.5}
+    size: 4
+    initialSpeed: {x: 4, y: 0}
+  - initialPos: {x: 0, y: 0}
+    size: 2
+    initialSpeed: {x: 0, y: 0}
+  - initialPos: {x: 5, y: 0.5}
+    size: 2
+    initialSpeed: {x: -4, y: 0}
+  - initialPos: {x: 2, y: 2}
+    size: 1.5
+    initialSpeed: {x: 2, y: 1}
+  - initialPos: {x: 3, y: 3}
+    size: 0.5
+    initialSpeed: {x: 3, y: 1}
+  - initialPos: {x: 4, y: 4}
+    size: 0.5
+    initialSpeed: {x: -1, y: 2}
+  - initialPos: {x: -1, y: -1}
+    size: 0.5
+    initialSpeed: {x: 2, y: 0.5}
+  _systemsEnabled:
+    keys:
+    - InitializationSystem
+    - PositionUpdateSystem
+    - RenderSystem
+    - llisionDetectionSystemem
+    - CollisionWithEdgesDetectionSystem
+    - CollisionWithEntityDetectionSystem
+    - GeneralCollisionResolutionSystem
+    - CollisionWithEntityResolutionSystem
+    - SizeUpdateSystem
+    - SizeRenderSystem
+    - CollisionWithEdgesResolutionSystem
+    - ColorUpdateSystem
+    - RenderSizeSystem
+    - RenderColorSystem
+    - TimeUpdateSystem
+    - SavePastPositionSystem
+    - RewindSystem
+    - SaveSystem
+    - UpdateFirstRunSystem
+    values: 01010101010101010101010101010101010101
