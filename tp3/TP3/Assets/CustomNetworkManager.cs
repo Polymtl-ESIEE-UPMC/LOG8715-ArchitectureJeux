@@ -56,7 +56,34 @@ public class CustomNetworkManager : NetworkingManager
             }
         }
     }
+    public void SendInputMessage(InputMessage msg)
+    {
+        using (PooledBitStream stream = PooledBitStream.Get())
+        {
+            using (PooledBitWriter writer = PooledBitWriter.Get(stream))
+            {
+                writer.WriteInt32(msg.messageID);
+                writer.WriteInt32(msg.timeCreated);
+                writer.WriteUInt32(msg.playerId);
+                writer.WriteInt16((byte)msg.keycode);
+                CustomMessagingManager.SendNamedMessage("Input", this.ServerClientId, stream, "customChannel");
+            }
+        }
+    }
 
+    private void HandleInputMessage(ulong clientId, Stream stream)
+    {
+        InputMessage inputMessage = new InputMessage();
+        using (PooledBitReader reader = PooledBitReader.Get(stream))
+        {
+            inputMessage.messageID = reader.ReadInt32();
+            inputMessage.timeCreated = reader.ReadInt32();
+            inputMessage.playerId = reader.ReadUInt32();
+            inputMessage.keycode = (KeyCode)reader.ReadInt16();
+
+            ComponentsManager.Instance.SetComponent<InputMessage>(inputMessage.playerId, inputMessage);
+        }
+    }
 
     private void HandleReplicationMessage(ulong clientId, Stream stream)
     {
@@ -92,7 +119,7 @@ public class CustomNetworkManager : NetworkingManager
 
     public void RegisterServerNetworkHandlers()
     {
-        // TODO
+        CustomMessagingManager.RegisterNamedMessageHandler("Input", HandleInputMessage);
     }
 
 
