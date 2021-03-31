@@ -19,11 +19,14 @@ public class PositionUpdateSystem : ISystem {
 
     public void UpdateSystem(float deltaTime)
     {
+        ExtrapolationComponent extrapolation = new ExtrapolationComponent();
         ComponentsManager.Instance.ForEach<ShapeComponent>((entityID, shapeComponent) => {
             shapeComponent.pos = GetNewPosition(shapeComponent.pos, shapeComponent.speed, deltaTime);
+            //extrapolation.positions.Add(shapeComponent.pos);
             ComponentsManager.Instance.SetComponent<ShapeComponent>(entityID, shapeComponent);
         });
-}
+        World.Instance.extrapolations.Add(extrapolation);
+    }
 
     public static Vector2 GetNewPosition(Vector2 position, Vector2 speed)
     {

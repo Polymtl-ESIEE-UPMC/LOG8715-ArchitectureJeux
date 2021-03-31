@@ -47,6 +47,7 @@ public class CustomNetworkManager : NetworkingManager
             {
                 writer.WriteInt32(msg.messageID);
                 writer.WriteInt32(msg.timeCreated);
+                writer.WriteInt32(msg.frameNumber);
                 writer.WriteUInt32(msg.entityId);
                 writer.WriteInt16((byte)msg.shape);
                 writer.WriteVector2(msg.pos);
@@ -92,6 +93,7 @@ public class CustomNetworkManager : NetworkingManager
         {
             replicationMessage.messageID = reader.ReadInt32();
             replicationMessage.timeCreated = reader.ReadInt32();
+            replicationMessage.frameNumber = reader.ReadInt32();
             replicationMessage.entityId = reader.ReadUInt32();
             replicationMessage.shape = (Config.Shape)reader.ReadInt16();
             replicationMessage.pos = reader.ReadVector2();

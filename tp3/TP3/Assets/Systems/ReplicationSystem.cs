@@ -11,6 +11,7 @@ public class ReplicationSystem : ISystem
             return GetType().Name;
         }
     }
+    public int latency = 0;
 
     public void UpdateSystem()
     {
@@ -45,10 +46,11 @@ public class ReplicationSystem : ISystem
     {
         // apply state from server
         // can receive only one replication message per entity for simplicity
+
         ComponentsManager.Instance.ForEach<ReplicationMessage>((entityID, msgReplication) => {
             // Updating entity info from message's state
             var component = ComponentsManager.Instance.GetComponent<ShapeComponent>(msgReplication.entityId);
-
+            
             if (component.shape != msgReplication.shape)
             {
                 // needs to respawn entity to change its shape
