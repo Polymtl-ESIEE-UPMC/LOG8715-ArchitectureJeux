@@ -17,15 +17,33 @@ public class PositionUpdateSystem : ISystem {
         UpdateSystem(Time.deltaTime);
     }
 
+    public void UpdateSystemExtrapolation(List<uint> ids)
+    {
+        UpdateSystemExtrapolation(ids, Time.deltaTime);
+    }
+
+    public void UpdateSystemExtrapolation(List<uint> ids, float deltaTime)
+    {
+        for (int i = 0; i < ids.Count; i++)
+        {
+            if (ComponentsManager.Instance.TryGetComponent(new EntityComponent(ids[i]), out ShapeComponent shape))
+            {
+                UpdateShape(ids[i], shape, deltaTime);
+            }
+        }
+    }
+
     public void UpdateSystem(float deltaTime)
     {
-        ExtrapolationComponent extrapolation = new ExtrapolationComponent();
         ComponentsManager.Instance.ForEach<ShapeComponent>((entityID, shapeComponent) => {
-            shapeComponent.pos = GetNewPosition(shapeComponent.pos, shapeComponent.speed, deltaTime);
-            //extrapolation.positions.Add(shapeComponent.pos);
-            ComponentsManager.Instance.SetComponent<ShapeComponent>(entityID, shapeComponent);
+            UpdateShape(entityID, shapeComponent, deltaTime);
         });
-        World.Instance.extrapolations.Add(extrapolation);
+    }
+
+    private void UpdateShape(uint entityId, ShapeComponent shape, float deltaTime)
+    {
+        shape.pos = GetNewPosition(shape.pos, shape.speed, deltaTime);
+        ComponentsManager.Instance.SetComponent<ShapeComponent>(entityId, shape);
     }
 
     public static Vector2 GetNewPosition(Vector2 position, Vector2 speed)

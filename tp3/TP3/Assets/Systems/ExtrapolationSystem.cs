@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System;
+using System.Collections.Generic;
 public class ExtrapolationSystem : ISystem
 {
     public string Name => "ExtrapolationSystem";
@@ -9,14 +9,16 @@ public class ExtrapolationSystem : ISystem
         if (ECSManager.Instance.NetworkManager.isClient)
         {
             int max = 0;
+            int time = Utils.SystemTime;
+            List<uint> ids = new List<uint>();
             ComponentsManager.Instance.ForEach<ReplicationMessage>((id, message) => {
                 if (Utils.SystemTime - message.timeCreated > max)
-                    max = Utils.SystemTime - message.timeCreated;
-
+                    max = time - message.timeCreated;
+                ids.Add(id);
             });
 
-            if (max != 0)
-                World.Instance.latency = max;
+            World.Instance.latency = max;
+
             int nbFrameToExtrapolate = World.Instance.latency / 20;
 
             Debug.Log("Latency=" + World.Instance.latency);
@@ -25,13 +27,14 @@ public class ExtrapolationSystem : ISystem
             WallCollisionDetectionSystem wallCollision = new WallCollisionDetectionSystem();
             BounceBackSystem bounceBack = new BounceBackSystem();
             PositionUpdateSystem positionUpdate = new PositionUpdateSystem();
-
+            ClearEndOfFrameComponentsSystem clear = new ClearEndOfFrameComponentsSystem();
             for (int i = 0; i < nbFrameToExtrapolate; i++)
             {
+                clear.UpdateSystem();
                 circleCollision.UpdateSystem();
                 wallCollision.UpdateSystem();
                 bounceBack.UpdateSystem();
-                positionUpdate.UpdateSystem();
+                positionUpdate.UpdateSystemExtrapolation(ids);
             }
         }
     }
