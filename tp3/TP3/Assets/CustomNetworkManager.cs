@@ -1,10 +1,7 @@
 ﻿using System.IO;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using MLAPI;
 using MLAPI.Messaging;
-using MLAPI.Serialization;
 using MLAPI.Serialization.Pooled;
 
 public class CustomNetworkManager : NetworkingManager
@@ -66,7 +63,7 @@ public class CustomNetworkManager : NetworkingManager
                 writer.WriteInt32(msg.messageID);
                 writer.WriteInt32(msg.timeCreated);
                 writer.WriteUInt32(msg.playerId);
-                writer.WriteInt16((byte)msg.keycode);
+                writer.WriteShortArray(msg.keycode.ToArray());
                 CustomMessagingManager.SendNamedMessage("Input", this.ServerClientId, stream, "customChannel");
             }
         }
@@ -80,7 +77,7 @@ public class CustomNetworkManager : NetworkingManager
             inputMessage.messageID = reader.ReadInt32();
             inputMessage.timeCreated = reader.ReadInt32();
             inputMessage.playerId = reader.ReadUInt32();
-            inputMessage.keycode = (KeyCode)reader.ReadInt16();
+            inputMessage.keycode = new List<short>(reader.ReadShortArray());
 
             ComponentsManager.Instance.SetComponent<InputMessage>(inputMessage.playerId, inputMessage);
         }

@@ -29,4 +29,4 @@ MonoBehaviour:
     size: 1
     shape: 1
   enableInputPrediction: 0
-  enablDeadReckoning: 0
+  enablDeadReckoning: 1

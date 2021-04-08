@@ -7,7 +7,8 @@ public sealed class World
 
     public int latency;
 
-    public List<ExtrapolationComponent> extrapolations;
+    public List<KeyCode> inputHistory;
+    public Dictionary<uint, List<Vector2>> positionHistory;
 
     static World()
     {
@@ -15,7 +16,8 @@ public sealed class World
 
     private World()
     {
-        extrapolations = new List<ExtrapolationComponent>();
+        inputHistory = new List<KeyCode>();
+        positionHistory = new Dictionary<uint, List<Vector2>>();
         latency = 0;
     }
 
