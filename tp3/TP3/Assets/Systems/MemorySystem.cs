@@ -21,16 +21,20 @@ public class MemorySystem : ISystem
            }
        });
 
-        if (ECSManager.Instance.NetworkManager.isClient && World.Instance.positionHistory.Count > 0)
+        if (ECSManager.Instance.NetworkManager.isClient)
         {
             uint playerId = (uint)CustomNetworkManager.Singleton.LocalClientId;
-            if (ComponentsManager.Instance.TryGetComponent(new EntityComponent(playerId), out InputMessage input))
+            if (World.Instance.positionHistory.ContainsKey(playerId) && World.Instance.positionHistory[playerId].Count > 0)
             {
-                World.Instance.inputHistory.Add((KeyCode)input.keycode[input.keycode.Count - 1]);
-            }
-            else
-            {
-                World.Instance.inputHistory.Add(KeyCode.None);
+
+                if (ComponentsManager.Instance.TryGetComponent(new EntityComponent(playerId), out InputMessage input))
+                {
+                    World.Instance.inputHistory.Add((KeyCode)input.keycode[input.keycode.Count - 1]);
+                }
+                else
+                {
+                    World.Instance.inputHistory.Add(KeyCode.None);
+                }
             }
         }
 
